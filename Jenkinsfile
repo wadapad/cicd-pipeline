@@ -6,5 +6,20 @@ pipeline {
                 sh 'node --version'
             }
         }
+        stage('test') {
+            steps {
+                echo 'Testing...'
+            }
+        }
+        stage('imagebuild') {
+            steps {
+                echo 'Building docker image...'
+            }
+        }
+        stage('deploy') {
+            steps {
+                echo 'Deploying...'
+            }
+        }
     }
 }
