@@ -1,14 +1,19 @@
 pipeline {
-    agent { docker { image 'node:20.11.1-alpine3.19' } }
+    agent any
+    tools {nodejs "NODEJS"}
     stages {
-        stage('build') {
+        stage('wadas build') {
             steps {
-                echo 'Wadapads Buildings...'
+                sh 'npm install'
             }
         }
         stage('test') {
             steps {
-                echo 'Testing...'
+                sh 'chmod +x ./deliver.sh'
+                sh 'chmod +x ./kill.sh'
+                sh './deliver.sh'
+		input message: 'Finished?'
+		sh './kill.sh'
             }
         }
         stage('imagebuild') {
