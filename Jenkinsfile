@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                '--version'
+                echo 'Wadapads Buildings...'
             }
         }
         stage('test') {
