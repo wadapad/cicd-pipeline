@@ -1,9 +1,29 @@
 pipeline {
-    agent { docker { image 'node:20.11.1-alpine3.19' } }
+    agent any
+    tools {nodejs "NODEJS"}
     stages {
-        stage('build') {
+        stage('wadas build') {
             steps {
-                sh 'node --version'
+                sh 'npm install'
+            }
+        }
+        stage('test') {
+            steps {
+                sh 'chmod +x ./deliver.sh'
+                sh 'chmod +x ./kill.sh'
+                sh './deliver.sh'
+		input message: 'Finished?'
+		sh './kill.sh'
+            }
+        }
+        stage('imagebuild') {
+            steps {
+                echo 'Building docker image...'
+            }
+        }
+        stage('deploy') {
+            steps {
+                echo 'Deploying...'
             }
         }
     }
