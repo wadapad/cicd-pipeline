@@ -6,6 +6,7 @@ pipeline {
       when {
         branch "main"
       }
+      steps {
         sh 'mv ./jenkins/main.svg ./src/logo.svg'
       }
     }
