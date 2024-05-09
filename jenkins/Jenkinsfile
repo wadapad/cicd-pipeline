@@ -18,22 +18,18 @@ pipeline {
         script {
           env.PORT=3001
         }
-        sh 'chmod +x ./jenkins/copylogo.sh'
-        sh './jenkins/copylogo.sh dev'
+        sh 'mv ./jenkins/dev.svg ./src/logo.svg'
       }
     }
     stage('build') {
       steps {
         sh 'npm install'
+        sh 'npm build'
       }
     }
     stage('test') {
       steps {
-        sh 'chmod +x ./jenkins/deliver.sh'
-        sh 'chmod +x ./jenkins/kill.sh'
-        sh './jenkins/deliver.sh'
-        input message: 'Finished?'
-        sh './jenkins/kill.sh'
+        sh 'npm run test'
       }
     }
     stage('imagebuild') {
@@ -43,7 +39,11 @@ pipeline {
     }
     stage('deploy') {
       steps {
-        echo 'Deploying...'
+        sh 'npm start &'
+        sh 'sleep 1'
+        sh 'echo $! > .pidfile'
+        input message: 'Finished?'
+        sh 'kill $(cat .pidfile)'
       }
     }
   }
