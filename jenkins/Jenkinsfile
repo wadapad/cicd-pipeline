@@ -7,7 +7,7 @@ pipeline {
         branch "main"
       }
       steps {
-        sh 'chmod +x ./jenkins/deliver.sh'
+        sh 'chmod +x ./jenkins/copylogo.sh'
         sh './jenkins/copylogo.sh main'
       }
     }
@@ -16,7 +16,7 @@ pipeline {
         branch "dev"
       }
       steps {
-        sh 'chmod +x ./jenkins/deliver.sh'
+        sh 'chmod +x ./jenkins/copylogo.sh'
         sh './jenkins/copylogo.sh dev'
       }
     }
