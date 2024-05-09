@@ -6,9 +6,7 @@ pipeline {
       when {
         branch "main"
       }
-      steps {
-        sh 'chmod +x ./jenkins/copylogo.sh'
-        sh './jenkins/copylogo.sh main'
+        sh 'mv ./jenkins/main.svg ./src/logo.svg'
       }
     }
     stage('dev logo prepare') {
@@ -16,6 +14,9 @@ pipeline {
         branch "dev"
       }
       steps {
+        script {
+          env.PORT=3001
+        }
         sh 'chmod +x ./jenkins/copylogo.sh'
         sh './jenkins/copylogo.sh dev'
       }
