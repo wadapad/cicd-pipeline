@@ -33,9 +33,10 @@ pipeline {
       }
     }
     stage('imagebuild') {
-      steps {
-        echo 'Building docker image...'
-      }
+			node {
+				def im = docker.build("cicd-react:${env.BUILD_ID}")
+				im.push()
+			}
     }
     stage('deploy') {
       steps {

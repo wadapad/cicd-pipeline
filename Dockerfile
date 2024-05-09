@@ -1,5 +1,12 @@
-FROM node:7.8.0
-WORKDIR /opt
-ADD . /opt
-RUN npm install
-ENTRYPOINT npm run start
+# Use the official Nginx image as the base image
+FROM nginx:alpine
+
+# Copy the React build artifacts into the Nginx web server root
+COPY  ./build /usr/share/nginx/html
+
+# Expose the port Nginx is listening on
+EXPOSE 80
+
+# Command to start Nginx when the container starts
+CMD ["nginx", "-g", "daemon off;"]
+
