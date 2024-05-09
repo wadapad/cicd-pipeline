@@ -2,18 +2,20 @@ pipeline {
   agent any
   tools {nodejs "NODEJS"}
   stages {
-    stage('wadas build') {
+    stage('dev branch build') {
+      when {
+        branch "dev"
+      }
       steps {
-        when {
-          branch "dev"
-        }
         echo "im in DEVELOPERR branch"
         sh 'npm install'
       }
+    }
+    stage('build in main branch') {
+      when {
+        branch "main"
+      }
       steps {
-        when {
-          branch "main"
-        }
         echo "im in main branch"
         sh 'npm install'
       }
