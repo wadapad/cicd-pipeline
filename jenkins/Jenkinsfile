@@ -7,7 +7,8 @@ pipeline {
         branch "main"
       }
       steps {
-        sh 'jenkins/copylogo.sh main'
+        sh 'chmod +x ./jenkins/deliver.sh'
+        sh './jenkins/copylogo.sh main'
       }
     }
     stage('dev logo prepare') {
@@ -15,7 +16,8 @@ pipeline {
         branch "dev"
       }
       steps {
-        sh 'jenkins/copylogo.sh dev'
+        sh 'chmod +x ./jenkins/deliver.sh'
+        sh './jenkins/copylogo.sh dev'
       }
     }
     stage('build') {
@@ -25,11 +27,11 @@ pipeline {
     }
     stage('test') {
       steps {
-        sh 'chmod +x jenkins/deliver.sh'
-        sh 'chmod +x jenkins/kill.sh'
-        sh 'jenkins/deliver.sh'
+        sh 'chmod +x ./jenkins/deliver.sh'
+        sh 'chmod +x ./jenkins/kill.sh'
+        sh './jenkins/deliver.sh'
         input message: 'Finished?'
-        sh 'jenkins/kill.sh'
+        sh './jenkins/kill.sh'
       }
     }
     stage('imagebuild') {
