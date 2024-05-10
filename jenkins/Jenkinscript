@@ -37,23 +37,10 @@ pipeline {
         sh 'npm run test'
       }
     }
-    stage('imagebuild-main') {
-      when {
-        branch "main"
-      }
+    stage('imagebuild') {
 			steps {
         script {
-          dockerImage = docker.build registry + ":main${BUILD_ID}"
-        }
-			}
-    }
-    stage('imagebuild-dev') {
-      when {
-        branch "dev"
-      }
-			steps {
-        script {
-          dockerImage = docker.build registry + ":dev${BUILD_ID}"
+          dockerImage = docker.build registry + ":${BUILD_ID}"
         }
 			}
     }
@@ -65,22 +52,6 @@ pipeline {
               dockerImage.push() 
             }
         }
-      }
-    }
-    stage('run-main') {
-      when {
-        branch "main"
-      }
-      steps {
-        sh "docker run -d --expose 3000 -p 3000:3000 ${registry}:main${BUILD_ID}"
-      }
-    }
-    stage('run-dev') {
-      when {
-        branch "dev"
-      }
-      steps {
-        sh "docker run -d --expose 3000 -p 3000:3000 ${registry}:dev${BUILD_ID}"
       }
     }
   }
