@@ -72,7 +72,7 @@ pipeline {
         branch "main"
       }
       steps {
-        sh "docker run -d --expose 3000 -p 3000:3000 ${registry}:main${BUILD_ID}"
+        sh "docker run -d --expose 3000 -p 3000:80 ${registry}:main${BUILD_ID}"
       }
     }
     stage('run-dev') {
@@ -80,7 +80,7 @@ pipeline {
         branch "dev"
       }
       steps {
-        sh "docker run -d --expose 3000 -p 3000:3000 ${registry}:dev${BUILD_ID}"
+        sh "docker run -d --expose 3001 -p 3001:80 ${registry}:dev${BUILD_ID}"
       }
     }
   }
